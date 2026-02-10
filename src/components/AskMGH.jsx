@@ -141,6 +141,8 @@ const AskMGH = () => {
   const messages = activeChat ? activeChat.messages : [];
   const isEmpty = messages.length === 0 && !activeChatId;
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
@@ -162,6 +164,7 @@ const AskMGH = () => {
     const newChat = { id: Date.now().toString(), messages: [], createdAt: new Date() };
     setChatSessions(prev => [newChat, ...prev]);
     setActiveChatId(newChat.id);
+    setIsSidebarOpen(false);
   };
 
   const goBackToWelcome = () => {
@@ -231,16 +234,28 @@ const AskMGH = () => {
   const showWelcome = !activeChatId;
 
   return (
-    <div className="flex h-[calc(100vh-3.5rem)] animate-fade-in">
+    <div className="flex h-[calc(100vh-3.5rem)] animate-fade-in relative">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Chat History Sidebar */}
-      <div className="w-56 bg-white border-r border-mgh-grey/15 flex flex-col flex-shrink-0">
-        <div className="p-3 border-b border-mgh-grey/15">
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-mgh-grey/15 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 md:w-56 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
+        <div className="p-3 border-b border-mgh-grey/15 flex justify-between items-center">
           <button
             onClick={startNewChat}
-            className="w-full flex items-center gap-2 bg-mgh-blue text-white px-3 py-2 rounded-lg font-barlow font-bold text-xs uppercase tracking-wider hover:bg-mgh-navy transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 bg-mgh-blue text-white px-3 py-2 rounded-lg font-barlow font-bold text-xs uppercase tracking-wider hover:bg-mgh-navy transition-colors"
           >
             <Plus size={14} strokeWidth={2} />
             New Chat
+          </button>
+          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden ml-2 text-mgh-grey">
+            <ArrowLeft size={20} />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto py-2">
@@ -252,7 +267,10 @@ const AskMGH = () => {
             chatSessions.map(session => (
               <button
                 key={session.id}
-                onClick={() => setActiveChatId(session.id)}
+                onClick={() => {
+                  setActiveChatId(session.id);
+                  setIsSidebarOpen(false);
+                }}
                 className={`w-full text-left px-3 py-2.5 flex items-start gap-2 group transition-colors ${activeChatId === session.id
                   ? 'bg-mgh-blue/5 border-r-2 border-mgh-blue'
                   : 'hover:bg-mgh-light'

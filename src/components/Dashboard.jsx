@@ -101,7 +101,7 @@ const Dashboard = ({ showToast }) => {
 
       {/* Row 2: Map + Exceptions — aligned heights */}
       <div className="flex flex-col lg:grid lg:grid-cols-5 gap-4 lg:h-[420px]">
-        <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 min-h-[400px] lg:h-full">
+        <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 h-[400px] lg:h-full">
           <WorldMap />
         </div>
         <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full overflow-y-auto">
