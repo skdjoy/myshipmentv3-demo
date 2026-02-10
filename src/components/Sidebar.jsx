@@ -6,22 +6,21 @@ import {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'askMGH', label: 'MGH ASK™', icon: Bot },
   { id: 'purchaseOrders', label: 'Purchase Orders', icon: Package },
   { id: 'shipments', label: 'Shipment Tracker', icon: Ship },
   { id: 'booking', label: 'Booking Engine', icon: ClipboardList },
   { id: 'documents', label: 'Documents', icon: FileText },
   { id: 'finance', label: 'Finance', icon: DollarSign },
   { id: 'sustainability', label: 'Sustainability', icon: Leaf },
-  { id: 'askMGH', label: 'Ask MGH', icon: Bot },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 const Sidebar = ({ activeView, onNavigate, collapsed, onToggle }) => {
   return (
     <div
-      className={`h-screen bg-mgh-blue flex flex-col transition-all duration-300 ${
-        collapsed ? 'w-16' : 'w-60'
-      }`}
+      className={`h-screen bg-mgh-blue flex flex-col transition-all duration-300 ${collapsed ? 'w-16' : 'w-60'
+        }`}
     >
       {/* Header */}
       <div className="px-4 py-5 flex items-center gap-3 border-b border-white/10">
@@ -46,11 +45,10 @@ const Sidebar = ({ activeView, onNavigate, collapsed, onToggle }) => {
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                isActive
+              className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${isActive
                   ? 'bg-mgh-navy border-l-3 border-mgh-cyan text-white'
                   : 'text-white/70 hover:bg-white/5 hover:text-white border-l-3 border-transparent'
-              }`}
+                }`}
               style={{ borderLeftWidth: '3px' }}
             >
               <Icon size={20} strokeWidth={2} className="flex-shrink-0" />

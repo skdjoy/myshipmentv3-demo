@@ -30,9 +30,8 @@ const ChatCard = ({ card }) => (
           <span className="font-barlow font-bold text-[10px] uppercase text-mgh-grey tracking-wider">{f.label}</span>
           <span className={`font-barlow text-sm ${f.highlight ? 'text-amber-600 font-bold' : 'text-mgh-charcoal'}`}>
             {f.badge && (
-              <span className={`mr-2 px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                f.badge === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'
-              }`}>{f.badge === 'warning' ? 'WARNING' : 'ALERT'}</span>
+              <span className={`mr-2 px-1.5 py-0.5 rounded text-[10px] font-bold ${f.badge === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'
+                }`}>{f.badge === 'warning' ? 'WARNING' : 'ALERT'}</span>
             )}
             {f.value}
           </span>
@@ -61,11 +60,10 @@ const ChatTable = ({ table }) => (
         {table.rows.map((row, i) => (
           <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-mgh-light'}>
             {row.map((cell, j) => (
-              <td key={j} className={`px-3 py-2 font-barlow ${
-                cell.includes('HIGH') ? 'text-red-500 font-bold' :
+              <td key={j} className={`px-3 py-2 font-barlow ${cell.includes('HIGH') ? 'text-red-500 font-bold' :
                 cell.includes('MEDIUM') ? 'text-amber-500 font-bold' :
-                'text-mgh-charcoal'
-              }`}>{cell}</td>
+                  'text-mgh-charcoal'
+                }`}>{cell}</td>
             ))}
           </tr>
         ))}
@@ -255,11 +253,10 @@ const AskMGH = () => {
               <button
                 key={session.id}
                 onClick={() => setActiveChatId(session.id)}
-                className={`w-full text-left px-3 py-2.5 flex items-start gap-2 group transition-colors ${
-                  activeChatId === session.id
-                    ? 'bg-mgh-blue/5 border-r-2 border-mgh-blue'
-                    : 'hover:bg-mgh-light'
-                }`}
+                className={`w-full text-left px-3 py-2.5 flex items-start gap-2 group transition-colors ${activeChatId === session.id
+                  ? 'bg-mgh-blue/5 border-r-2 border-mgh-blue'
+                  : 'hover:bg-mgh-light'
+                  }`}
               >
                 <MessageSquare size={14} strokeWidth={2} className="text-mgh-blue flex-shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
@@ -312,7 +309,7 @@ const AskMGH = () => {
             {showWelcome && (
               <div className="flex flex-col items-center justify-center pt-12">
                 <h1 className="font-oswald font-semibold text-[28px] uppercase text-mgh-blue tracking-wide">
-                  Ask MGH
+                  MGH ASK™
                 </h1>
                 <p className="font-barlow text-base text-mgh-grey mt-1">
                   Your AI-Powered Supply Chain Assistant
@@ -355,7 +352,7 @@ const AskMGH = () => {
                   Type a question below to get started
                 </p>
                 <div className="grid grid-cols-2 gap-3 mt-6 w-full max-w-lg">
-                  {suggestedQuestions.slice(0, 4).map((sq, i) => {
+                  {suggestedQuestions.map((sq, i) => {
                     const Icon = iconMap[sq.icon];
                     return (
                       <button
