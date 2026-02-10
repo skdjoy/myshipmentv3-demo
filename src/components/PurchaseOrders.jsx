@@ -126,43 +126,51 @@ const PurchaseOrders = ({ showToast }) => {
                       <h4 className="font-barlow font-bold text-xs uppercase text-mgh-charcoal mb-4">
                         Production Milestones
                       </h4>
-                      <div className="flex items-center gap-0 overflow-x-auto py-4 px-1 lg:pb-0">
+                      <div className="flex items-start justify-between w-full overflow-x-auto py-6 px-4">
                         {milestoneLabels.map((m, i) => {
                           const date = po.milestones[m.key];
                           const isComplete = !!date;
                           const nextKey = milestoneLabels[i + 1]?.key;
                           const isCurrent = isComplete && nextKey && !po.milestones[nextKey];
+                          const isLast = i === milestoneLabels.length - 1;
+
                           return (
-                            <div key={m.key} className="flex items-center flex-1 min-w-[100px]">
-                              <div className="flex flex-col items-center flex-none w-auto mx-auto px-2 relative z-10">
-                                <div
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-sm ${isComplete
-                                    ? isCurrent
-                                      ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20'
-                                      : 'bg-mgh-blue text-white'
-                                    : 'bg-white border-2 border-mgh-grey/30 text-mgh-grey'
-                                    }`}
-                                >
-                                  {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
-                                </div>
-                                <span className="font-barlow text-[10px] mt-2 text-center text-mgh-charcoal whitespace-nowrap font-medium">
-                                  {m.label}
-                                </span>
-                                {date && (
-                                  <span className="font-barlow text-[9px] text-mgh-grey mt-0.5">{date}</span>
-                                )}
-                              </div>
-                              {i < milestoneLabels.length - 1 && (
-                                <div className="flex-1 w-full mx-[-10px] h-[3px] mt-[-24px] z-0 relative">
-                                  {/* Background Line */}
-                                  <div className="absolute inset-0 bg-mgh-grey/20 rounded-full" />
-                                  {/* Progress Line */}
+                            <div key={m.key} className="relative flex-1 flex flex-col items-center min-w-[80px] group">
+                              {/* Connecting Line (for all except last) */}
+                              {!isLast && (
+                                <div className="absolute top-[14px] left-[50%] w-full h-[3px] -translate-y-1/2 z-0">
+                                  {/* Background Track */}
+                                  <div className="absolute inset-0 bg-mgh-grey/20" />
+                                  {/* Active Progress */}
                                   <div
-                                    className={`absolute inset-0 rounded-full transition-all duration-500 ${isComplete && !isCurrent ? 'bg-mgh-blue' : 'w-0'
+                                    className={`absolute inset-0 transition-all duration-700 ease-out origin-left ${isComplete && !isCurrent ? 'bg-mgh-blue w-full' : 'w-0'
                                       }`}
                                   />
                                 </div>
                               )}
+
+                              {/* Milestone Circle */}
+                              <div
+                                className={`relative z-10 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 shadow-sm ${isComplete
+                                    ? isCurrent
+                                      ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20 scale-110'
+                                      : 'bg-mgh-blue text-white'
+                                    : 'bg-white border-2 border-mgh-grey/30 text-mgh-grey'
+                                  }`}
+                              >
+                                {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
+                              </div>
+
+                              {/* Label & Date */}
+                              <div className="mt-3 flex flex-col items-center text-center">
+                                <span className={`font-barlow text-[10px] uppercase font-bold tracking-wide transition-colors ${isComplete ? 'text-mgh-blue' : 'text-mgh-grey'
+                                  }`}>
+                                  {m.label}
+                                </span>
+                                {date && (
+                                  <span className="font-barlow text-[9px] text-mgh-grey/80 mt-1 font-medium">{date}</span>
+                                )}
+                              </div>
                             </div>
                           );
                         })}
