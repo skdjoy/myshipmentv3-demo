@@ -50,11 +50,10 @@ const ShipmentTracker = ({ showToast }) => {
           <button
             key={status}
             onClick={() => setStatusFilter(status)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-barlow font-bold transition-colors ${
-              statusFilter === status
+            className={`px-3 py-1.5 rounded-lg text-sm font-barlow font-bold transition-colors ${statusFilter === status
                 ? 'bg-mgh-blue text-white'
                 : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
-            }`}
+              }`}
           >
             {status} ({count})
           </button>
@@ -62,8 +61,8 @@ const ShipmentTracker = ({ showToast }) => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden overflow-x-auto">
+        <table className="w-full min-w-[900px]">
           <thead>
             <tr className="bg-mgh-blue text-white">
               {['Shipment ID', 'Vessel', 'Carrier', 'Route', 'Carrier ETA', 'MGH AI ETA', 'Status', 'Exception'].map(h => (
@@ -88,12 +87,11 @@ const ShipmentTracker = ({ showToast }) => {
                     {shp.carrierETA !== shp.mghPredictedETA && ' ⚠️'}
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${
-                      shp.status === 'In Transit' ? 'bg-blue-100 text-blue-700' :
-                      shp.status === 'At Origin' ? 'bg-yellow-100 text-yellow-700' :
-                      shp.status === 'Customs' ? 'bg-purple-100 text-purple-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
+                    <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${shp.status === 'In Transit' ? 'bg-blue-100 text-blue-700' :
+                        shp.status === 'At Origin' ? 'bg-yellow-100 text-yellow-700' :
+                          shp.status === 'Customs' ? 'bg-purple-100 text-purple-700' :
+                            'bg-green-100 text-green-700'
+                      }`}>
                       {shp.status}
                     </span>
                   </td>
@@ -113,7 +111,7 @@ const ShipmentTracker = ({ showToast }) => {
                 {expandedRow === shp.id && (
                   <tr>
                     <td colSpan={8} className="bg-mgh-light/50 px-6 py-5 animate-fade-in">
-                      <div className="grid grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Timeline */}
                         <div className="col-span-1">
                           <h4 className="font-barlow font-bold text-xs uppercase text-mgh-charcoal mb-3">
@@ -123,13 +121,12 @@ const ShipmentTracker = ({ showToast }) => {
                             {timelineForShipment(shp).map((step, i) => (
                               <div key={i} className="flex gap-3">
                                 <div className="flex flex-col items-center">
-                                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                    step.done
+                                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${step.done
                                       ? step.current
                                         ? 'bg-mgh-cyan animate-glow'
                                         : 'bg-mgh-blue'
                                       : 'bg-mgh-grey/30'
-                                  }`}>
+                                    }`}>
                                     {step.done && !step.current && <Check size={10} strokeWidth={3} className="text-white" />}
                                     {step.current && <Clock size={10} strokeWidth={2} className="text-white" />}
                                   </div>
@@ -215,7 +212,7 @@ const ShipmentTracker = ({ showToast }) => {
 
                         {/* For shipments without ETA discrepancy */}
                         {shp.carrierETA === shp.mghPredictedETA && (
-                          <div className="col-span-2">
+                          <div className="lg:col-span-2">
                             <div className="border-l-4 border-green-500 bg-green-50 rounded-r-lg p-4">
                               <h4 className="font-barlow font-bold text-xs uppercase text-green-700 mb-2">
                                 On Track
@@ -224,7 +221,7 @@ const ShipmentTracker = ({ showToast }) => {
                                 This shipment is on schedule. MGH AI ETA matches carrier ETA. No action required.
                               </p>
                             </div>
-                            <div className="mt-3 grid grid-cols-2 gap-3">
+                            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                               <p className="font-barlow text-xs text-mgh-grey">
                                 Container: <span className="font-bold text-mgh-charcoal">{shp.container}</span>
                               </p>

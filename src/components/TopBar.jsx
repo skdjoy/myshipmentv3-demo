@@ -1,12 +1,15 @@
 import React from 'react';
-import { Search, Bell } from 'lucide-react';
+import { Search, Bell, Menu } from 'lucide-react';
 
-const TopBar = () => {
+const TopBar = ({ onMenuClick }) => {
   return (
-    <div className="h-14 bg-white border-b border-mgh-grey/20 flex items-center justify-between px-6">
-      {/* Left: Brand */}
+    <div className="h-14 bg-white border-b border-mgh-grey/20 flex items-center justify-between px-4 lg:px-6">
+      {/* Left: Brand / Menu */}
       <div className="flex items-center gap-3">
-        <span className="font-barlow text-mgh-blue text-lg font-bold tracking-wide">
+        <button onClick={onMenuClick} className="lg:hidden text-mgh-blue hover:text-mgh-navy">
+          <Menu size={24} strokeWidth={2} />
+        </button>
+        <span className="font-barlow text-mgh-blue text-lg font-bold tracking-wide lg:hidden">
           myshipment
         </span>
       </div>

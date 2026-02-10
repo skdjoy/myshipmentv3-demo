@@ -29,7 +29,7 @@ const Finance = ({ showToast }) => {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -46,13 +46,13 @@ const Finance = ({ showToast }) => {
       </div>
 
       {/* Invoice Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden overflow-x-auto">
         <div className="px-5 py-3 border-b border-mgh-light">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide">
             Invoice Reconciliation
           </h2>
         </div>
-        <table className="w-full">
+        <table className="w-full min-w-[700px]">
           <thead>
             <tr className="bg-mgh-blue text-white">
               {['Invoice ID', 'Carrier', 'Amount', '3-Way Match', 'Status', 'Due Date', 'Action'].map(h => (
@@ -68,11 +68,10 @@ const Finance = ({ showToast }) => {
                 <td className="px-4 py-3 font-mono text-sm font-bold">${inv.amount.toLocaleString()}</td>
                 <td className="px-4 py-3 font-mono text-sm">{inv.matchRate}</td>
                 <td className="px-4 py-3">
-                  <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${
-                    inv.approved ? 'bg-green-100 text-green-700' :
-                    inv.status.includes('Discrepancy') ? 'bg-red-100 text-red-700' :
-                    'bg-amber-100 text-amber-700'
-                  }`}>
+                  <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${inv.approved ? 'bg-green-100 text-green-700' :
+                      inv.status.includes('Discrepancy') ? 'bg-red-100 text-red-700' :
+                        'bg-amber-100 text-amber-700'
+                    }`}>
                     {inv.status}
                   </span>
                   {inv.discrepancy && (
@@ -97,7 +96,7 @@ const Finance = ({ showToast }) => {
       </div>
 
       {/* Landed Cost Calculator */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="bg-white rounded-lg shadow-sm p-5">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
             Landed Cost Calculator

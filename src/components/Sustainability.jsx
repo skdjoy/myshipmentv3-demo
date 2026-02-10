@@ -21,7 +21,7 @@ const Sustainability = ({ showToast }) => {
       </div>
 
       {/* KPI Cards — green accent */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -38,7 +38,7 @@ const Sustainability = ({ showToast }) => {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Emissions by Trade Lane */}
         <div className="bg-white rounded-lg shadow-sm p-5">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
@@ -103,16 +103,16 @@ const Sustainability = ({ showToast }) => {
         <p className="font-barlow text-sm text-mgh-grey mb-4">
           Projects: Renewable Energy — Vietnam Wind Farm, Reforestation — Bangladesh Mangrove
         </p>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => showToast('Carbon offset purchase initiated — pending finance approval')}
-            className="bg-[#27B373] text-white px-5 py-2 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+            className="bg-[#27B373] text-white px-5 py-2 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity w-full sm:w-auto"
           >
             Purchase Offsets
           </button>
           <button
             onClick={() => showToast('CSRD Report download initiated')}
-            className="bg-mgh-blue text-white px-5 py-2 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:bg-mgh-navy transition-colors"
+            className="bg-mgh-blue text-white px-5 py-2 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:bg-mgh-navy transition-colors w-full sm:w-auto"
           >
             Download CSRD Report
           </button>

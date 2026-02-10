@@ -48,11 +48,10 @@ const PurchaseOrders = ({ showToast }) => {
           <button
             key={opt}
             onClick={() => onChange(opt)}
-            className={`px-2.5 py-1 text-xs font-barlow rounded transition-colors ${
-              value === opt
+            className={`px-2.5 py-1 text-xs font-barlow rounded transition-colors ${value === opt
                 ? 'bg-mgh-blue text-white'
                 : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
-            }`}
+              }`}
           >
             {opt}
           </button>
@@ -78,8 +77,8 @@ const PurchaseOrders = ({ showToast }) => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden overflow-x-auto">
+        <table className="w-full min-w-[800px]">
           <thead>
             <tr className="bg-mgh-blue text-white">
               {['PO Number', 'Supplier', 'Origin', 'Items', 'Units', 'Ex-Factory', 'Status', 'Progress'].map(h => (
@@ -127,27 +126,26 @@ const PurchaseOrders = ({ showToast }) => {
                       <h4 className="font-barlow font-bold text-xs uppercase text-mgh-charcoal mb-4">
                         Production Milestones
                       </h4>
-                      <div className="flex items-center gap-0">
+                      <div className="flex items-center gap-0 overflow-x-auto pb-4 lg:pb-0">
                         {milestoneLabels.map((m, i) => {
                           const date = po.milestones[m.key];
                           const isComplete = !!date;
                           const nextKey = milestoneLabels[i + 1]?.key;
                           const isCurrent = isComplete && nextKey && !po.milestones[nextKey];
                           return (
-                            <div key={m.key} className="flex items-center flex-1">
-                              <div className="flex flex-col items-center">
+                            <div key={m.key} className="flex items-center flex-1 min-w-[100px]">
+                              <div className="flex flex-col items-center w-full">
                                 <div
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
-                                    isComplete
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${isComplete
                                       ? isCurrent
                                         ? 'bg-mgh-cyan text-white animate-glow'
                                         : 'bg-mgh-blue text-white'
                                       : 'bg-mgh-grey/30 text-mgh-grey'
-                                  }`}
+                                    }`}
                                 >
                                   {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
                                 </div>
-                                <span className="font-barlow text-[10px] mt-1 text-center w-16 text-mgh-charcoal">
+                                <span className="font-barlow text-[10px] mt-1 text-center w-full text-mgh-charcoal px-1">
                                   {m.label}
                                 </span>
                                 {date && (
@@ -163,7 +161,7 @@ const PurchaseOrders = ({ showToast }) => {
                       </div>
 
                       {/* Vendor Scorecard */}
-                      <div className="mt-5 flex gap-3">
+                      <div className="mt-5 flex flex-wrap gap-3">
                         <span className="bg-mgh-blue/10 text-mgh-blue px-3 py-1 rounded text-xs font-barlow font-bold">
                           Booking Accuracy: 96%
                         </span>

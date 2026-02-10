@@ -54,16 +54,15 @@ const Documents = ({ showToast }) => {
       </div>
 
       {/* Category Tabs */}
-      <div className="flex border-b border-mgh-grey/20">
+      <div className="flex border-b border-mgh-grey/20 overflow-x-auto pb-0 lg:pb-0 no-scrollbar">
         {categories.map(cat => (
           <button
             key={cat}
             onClick={() => setActiveTab(cat)}
-            className={`px-4 py-2.5 font-barlow text-sm transition-colors ${
-              activeTab === cat
+            className={`px-4 py-2.5 font-barlow text-sm transition-colors whitespace-nowrap ${activeTab === cat
                 ? 'text-mgh-blue font-bold border-b-2 border-mgh-blue'
                 : 'text-mgh-grey hover:text-mgh-charcoal'
-            }`}
+              }`}
           >
             {cat === 'All' ? 'All Documents' : cat === 'B/L' ? 'Bills of Lading' : cat === 'Invoice' ? 'Commercial Invoices' : cat === 'Packing' ? 'Packing Lists' : cat === 'Certificate' ? 'Certificates' : 'Customs Filings'}
           </button>
@@ -71,8 +70,8 @@ const Documents = ({ showToast }) => {
       </div>
 
       {/* Document Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden overflow-x-auto">
+        <table className="w-full min-w-[800px]">
           <thead>
             <tr className="bg-mgh-blue text-white">
               {['', 'Document Name', 'Type', 'Shipment', 'Date', 'Status', 'AI', 'Actions'].map(h => (

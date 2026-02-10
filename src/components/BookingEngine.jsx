@@ -81,7 +81,7 @@ const BookingEngine = ({ showToast }) => {
 
       {/* Booking Form */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <label className="font-barlow font-bold text-xs uppercase text-mgh-charcoal block mb-1">Origin</label>
             <select value={origin} onChange={e => setOrigin(e.target.value)} className="w-full border border-mgh-grey/40 rounded-lg px-3 py-2 text-sm font-barlow focus:outline-none focus:ring-2 focus:ring-mgh-blue/30 focus:border-mgh-blue">
@@ -117,7 +117,7 @@ const BookingEngine = ({ showToast }) => {
         </div>
         <button
           onClick={() => setShowResults(true)}
-          className="mt-4 bg-mgh-blue text-white px-6 py-2.5 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:bg-mgh-navy transition-colors flex items-center gap-2"
+          className="mt-4 bg-mgh-blue text-white px-6 py-2.5 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:bg-mgh-navy transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
         >
           <Search size={16} strokeWidth={2} />
           Search Routes
@@ -126,7 +126,7 @@ const BookingEngine = ({ showToast }) => {
 
       {/* Route Options */}
       {showResults && (
-        <div className="grid grid-cols-3 gap-4 animate-fade-in">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
           {routeOptions.map((opt) => {
             const Icon = opt.icon;
             return (

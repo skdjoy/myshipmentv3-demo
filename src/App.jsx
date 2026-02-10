@@ -15,13 +15,19 @@ import { Settings } from 'lucide-react';
 const App = () => {
   const [activeView, setActiveView] = useState('dashboard');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false); // New state for mobile
   const [toast, setToast] = useState(null);
 
-  // Auto-collapse sidebar on small screens
+  // Handle resize for desktop collapse
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setSidebarCollapsed(true);
+      if (window.innerWidth >= 1024) {
+        setMobileSidebarOpen(false); // Reset mobile state on desktop
+        if (window.innerWidth < 1280) {
+          setSidebarCollapsed(true);
+        } else {
+          setSidebarCollapsed(false);
+        }
       }
     };
     handleResize();
@@ -32,6 +38,11 @@ const App = () => {
   const showToast = useCallback((message) => {
     setToast(message);
   }, []);
+
+  const handleNavigate = (viewId) => {
+    setActiveView(viewId);
+    setMobileSidebarOpen(false); // Close mobile sidebar on navigation
+  };
 
   const renderView = () => {
     switch (activeView) {
@@ -66,18 +77,20 @@ const App = () => {
 
   return (
     <div className="flex h-screen bg-mgh-light overflow-hidden">
-      {/* Sidebar */}
+      {/* Sidebar - Passed mobile props */}
       <Sidebar
         activeView={activeView}
-        onNavigate={setActiveView}
+        onNavigate={handleNavigate}
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        mobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar />
-        <main className={`flex-1 overflow-y-auto ${activeView === 'askMGH' ? '' : 'p-6'}`}>
+      <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <TopBar onMenuClick={() => setMobileSidebarOpen(true)} />
+        <main className={`flex-1 overflow-y-auto ${activeView === 'askMGH' ? '' : 'p-4 md:p-6'}`}>
           {renderView()}
         </main>
       </div>

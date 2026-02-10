@@ -27,9 +27,8 @@ const KPICard = ({ icon: Icon, label, value, trend, trendValue, subtext, delay =
           </span>
         </div>
         {trend && (
-          <div className={`flex items-center gap-0.5 text-xs font-barlow ${
-            trend === 'up' ? 'text-green-500' : trend === 'down' ? 'text-red-500' : 'text-mgh-grey'
-          }`}>
+          <div className={`flex items-center gap-0.5 text-xs font-barlow ${trend === 'up' ? 'text-green-500' : trend === 'down' ? 'text-red-500' : 'text-mgh-grey'
+            }`}>
             {trend === 'up' ? <TrendingUp size={14} /> : trend === 'down' ? <TrendingDown size={14} /> : <Minus size={14} />}
             <span>{trendValue}</span>
           </div>
@@ -61,7 +60,7 @@ const Dashboard = ({ showToast }) => {
       </div>
 
       {/* Row 1: KPI Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard
           icon={Ship}
           label="Active Shipments"
@@ -101,11 +100,11 @@ const Dashboard = ({ showToast }) => {
       </div>
 
       {/* Row 2: Map + Exceptions — aligned heights */}
-      <div className="grid grid-cols-5 gap-4" style={{ height: 420 }}>
-        <div className="col-span-3 bg-white rounded-lg shadow-sm p-4 h-full">
+      <div className="flex flex-col lg:grid lg:grid-cols-5 gap-4 lg:h-[420px]">
+        <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full">
           <WorldMap />
         </div>
-        <div className="col-span-2 bg-white rounded-lg shadow-sm p-4 h-full overflow-y-auto">
+        <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full overflow-y-auto">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-3">
             Action Items
           </h2>
@@ -144,7 +143,7 @@ const Dashboard = ({ showToast }) => {
       </div>
 
       {/* Row 3: Charts */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Freight Spend */}
         <div className="bg-white rounded-lg shadow-sm p-4">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
