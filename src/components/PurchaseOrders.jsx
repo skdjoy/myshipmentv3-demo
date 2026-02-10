@@ -136,16 +136,16 @@ const PurchaseOrders = ({ showToast }) => {
                             <div key={m.key} className="flex items-center flex-1 min-w-[100px]">
                               <div className="flex flex-col items-center flex-none w-auto mx-auto px-2 relative z-10">
                                 <div
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${isComplete
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-sm ${isComplete
                                     ? isCurrent
                                       ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20'
                                       : 'bg-mgh-blue text-white'
-                                    : 'bg-mgh-grey/30 text-mgh-grey'
+                                    : 'bg-white border-2 border-mgh-grey/30 text-mgh-grey'
                                     }`}
                                 >
                                   {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
                                 </div>
-                                <span className="font-barlow text-[10px] mt-2 text-center text-mgh-charcoal whitespace-nowrap">
+                                <span className="font-barlow text-[10px] mt-2 text-center text-mgh-charcoal whitespace-nowrap font-medium">
                                   {m.label}
                                 </span>
                                 {date && (
@@ -153,7 +153,15 @@ const PurchaseOrders = ({ showToast }) => {
                                 )}
                               </div>
                               {i < milestoneLabels.length - 1 && (
-                                <div className={`flex-1 h-0.5 mx-[-10px] z-0 ${isComplete && !isCurrent ? 'bg-mgh-blue' : 'bg-mgh-grey/30'}`} />
+                                <div className="flex-1 w-full mx-[-10px] h-[3px] mt-[-24px] z-0 relative">
+                                  {/* Background Line */}
+                                  <div className="absolute inset-0 bg-mgh-grey/20 rounded-full" />
+                                  {/* Progress Line */}
+                                  <div
+                                    className={`absolute inset-0 rounded-full transition-all duration-500 ${isComplete && !isCurrent ? 'bg-mgh-blue' : 'w-0'
+                                      }`}
+                                  />
+                                </div>
                               )}
                             </div>
                           );
