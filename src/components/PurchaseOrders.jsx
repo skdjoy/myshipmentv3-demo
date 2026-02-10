@@ -49,8 +49,8 @@ const PurchaseOrders = ({ showToast }) => {
             key={opt}
             onClick={() => onChange(opt)}
             className={`px-2.5 py-1 text-xs font-barlow rounded transition-colors ${value === opt
-                ? 'bg-mgh-blue text-white'
-                : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
+              ? 'bg-mgh-blue text-white'
+              : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
               }`}
           >
             {opt}
@@ -126,7 +126,7 @@ const PurchaseOrders = ({ showToast }) => {
                       <h4 className="font-barlow font-bold text-xs uppercase text-mgh-charcoal mb-4">
                         Production Milestones
                       </h4>
-                      <div className="flex items-center gap-0 overflow-x-auto pb-4 lg:pb-0">
+                      <div className="flex items-center gap-0 overflow-x-auto py-4 px-1 lg:pb-0">
                         {milestoneLabels.map((m, i) => {
                           const date = po.milestones[m.key];
                           const isComplete = !!date;
@@ -134,26 +134,26 @@ const PurchaseOrders = ({ showToast }) => {
                           const isCurrent = isComplete && nextKey && !po.milestones[nextKey];
                           return (
                             <div key={m.key} className="flex items-center flex-1 min-w-[100px]">
-                              <div className="flex flex-col items-center w-full">
+                              <div className="flex flex-col items-center flex-none w-auto mx-auto px-2 relative z-10">
                                 <div
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${isComplete
-                                      ? isCurrent
-                                        ? 'bg-mgh-cyan text-white animate-glow'
-                                        : 'bg-mgh-blue text-white'
-                                      : 'bg-mgh-grey/30 text-mgh-grey'
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${isComplete
+                                    ? isCurrent
+                                      ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20'
+                                      : 'bg-mgh-blue text-white'
+                                    : 'bg-mgh-grey/30 text-mgh-grey'
                                     }`}
                                 >
                                   {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
                                 </div>
-                                <span className="font-barlow text-[10px] mt-1 text-center w-full text-mgh-charcoal px-1">
+                                <span className="font-barlow text-[10px] mt-2 text-center text-mgh-charcoal whitespace-nowrap">
                                   {m.label}
                                 </span>
                                 {date && (
-                                  <span className="font-barlow text-[9px] text-mgh-grey">{date}</span>
+                                  <span className="font-barlow text-[9px] text-mgh-grey mt-0.5">{date}</span>
                                 )}
                               </div>
                               {i < milestoneLabels.length - 1 && (
-                                <div className={`flex-1 h-0.5 mx-1 ${isComplete && !isCurrent ? 'bg-mgh-blue' : 'bg-mgh-grey/30'}`} />
+                                <div className={`flex-1 h-0.5 mx-[-10px] z-0 ${isComplete && !isCurrent ? 'bg-mgh-blue' : 'bg-mgh-grey/30'}`} />
                               )}
                             </div>
                           );

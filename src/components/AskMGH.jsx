@@ -285,22 +285,34 @@ const AskMGH = () => {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Back button when in a chat */}
-        {activeChatId && (
-          <div className="px-4 py-2 border-b border-mgh-grey/15 bg-white flex items-center gap-3">
+        {/* Header Bar */}
+        <div className="px-4 py-2 border-b border-mgh-grey/15 bg-white flex items-center justify-between shadow-sm z-10">
+          <div className="flex items-center gap-3">
+            {/* Mobile Sidebar Toggle */}
             <button
-              onClick={goBackToWelcome}
-              className="flex items-center gap-1.5 text-mgh-blue hover:text-mgh-navy font-barlow font-bold text-xs uppercase tracking-wider transition-colors"
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden text-mgh-blue hover:text-mgh-navy"
             >
-              <ArrowLeft size={16} strokeWidth={2} />
-              Back
+              <MessageSquare size={20} />
             </button>
-            {activeChat && activeChat.messages.length > 0 && (
-              <span className="font-barlow text-xs text-mgh-grey truncate">
-                {getChatTitle(activeChat.messages)}
-              </span>
+
+            {activeChatId && (
+              <button
+                onClick={goBackToWelcome}
+                className="flex items-center gap-1.5 text-mgh-blue hover:text-mgh-navy font-barlow font-bold text-xs uppercase tracking-wider transition-colors"
+              >
+                <ArrowLeft size={16} strokeWidth={2} />
+                Back
+              </button>
             )}
           </div>
-        )}
+
+          {activeChat && activeChat.messages.length > 0 && (
+            <span className="font-barlow text-xs text-mgh-grey truncate max-w-[150px] md:max-w-xs text-right">
+              {getChatTitle(activeChat.messages)}
+            </span>
+          )}
+        </div>
 
         {/* Chat Messages / Welcome */}
         <div className="flex-1 overflow-y-auto px-4 py-6">

@@ -100,96 +100,95 @@ const Dashboard = ({ showToast }) => {
       </div>
 
       {/* Row 2: Map + Exceptions — aligned heights */}
-      <div className="flex flex-col lg:grid lg:grid-cols-5 gap-4 lg:h-[420px]">
-        <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full">
-          <WorldMap />
-        </div>
-        <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full overflow-y-auto">
-          <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-3">
-            Action Items
-          </h2>
-          <div className="space-y-3">
-            {exceptions.map((item, i) => {
-              const style = priorityStyles[item.priority];
-              return (
-                <div
-                  key={i}
-                  className={`border-l-3 ${style.border} pl-3 py-2 animate-fade-in`}
-                  style={{ borderLeftWidth: '3px', animationDelay: `${i * 100}ms` }}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`${style.bg} text-white text-[10px] font-barlow font-bold px-2 py-0.5 rounded`}>
-                      {style.text}
-                    </span>
-                  </div>
-                  <p className="font-barlow text-sm text-mgh-charcoal font-bold">{item.title}</p>
-                  <p className="font-barlow text-xs text-mgh-grey mt-0.5">{item.details}</p>
-                  <div className="flex gap-2 mt-2">
-                    {item.actions.map((action, j) => (
-                      <button
-                        key={j}
-                        onClick={() => showToast(`${action} — action initiated`)}
-                        className="text-[11px] font-barlow font-bold text-mgh-blue border border-mgh-blue/30 px-2 py-1 rounded hover:bg-mgh-blue hover:text-white transition-colors"
-                      >
-                        {action}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 min-h-[400px] lg:h-full">
+        <WorldMap />
       </div>
-
-      {/* Row 3: Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Freight Spend */}
-        <div className="bg-white rounded-lg shadow-sm p-4">
-          <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
-            Freight Spend (Last 6 Months)
-          </h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={spendData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F4F4F4" />
-              <XAxis dataKey="month" tick={{ fontSize: 12, fontFamily: 'Barlow Condensed', fill: '#2A2A38' }} />
-              <YAxis tickFormatter={formatCurrency} tick={{ fontSize: 11, fontFamily: 'Space Mono', fill: '#B2B8BF' }} />
-              <Tooltip
-                formatter={(val) => formatCurrency(val)}
-                contentStyle={{ fontFamily: 'Barlow Condensed', fontSize: 13, borderRadius: 8, borderColor: '#B2B8BF' }}
-              />
-              <Legend wrapperStyle={{ fontFamily: 'Barlow Condensed', fontSize: 12 }} />
-              <Bar dataKey="ocean" name="Ocean" stackId="a" fill="#34328F" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="air" name="Air" stackId="a" fill="#00D4FF" />
-              <Bar dataKey="truck" name="Truck" stackId="a" fill="#F59E0B" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Carrier Performance */}
-        <div className="bg-white rounded-lg shadow-sm p-4">
-          <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
-            On-Time Performance by Carrier
-          </h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={carrierPerformance}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F4F4F4" />
-              <XAxis dataKey="week" tick={{ fontSize: 12, fontFamily: 'Barlow Condensed', fill: '#2A2A38' }} />
-              <YAxis domain={[80, 100]} tick={{ fontSize: 11, fontFamily: 'Space Mono', fill: '#B2B8BF' }} tickFormatter={(v) => `${v}%`} />
-              <Tooltip
-                formatter={(val) => `${val}%`}
-                contentStyle={{ fontFamily: 'Barlow Condensed', fontSize: 13, borderRadius: 8, borderColor: '#B2B8BF' }}
-              />
-              <Legend wrapperStyle={{ fontFamily: 'Barlow Condensed', fontSize: 12 }} />
-              <Line type="monotone" dataKey="maersk" name="Maersk" stroke="#34328F" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="msc" name="MSC" stroke="#082567" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="cosco" name="COSCO" stroke="#00D4FF" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="hapagLloyd" name="Hapag-Lloyd" stroke="#B2B8BF" strokeWidth={2} dot={{ r: 3 }} />
-            </LineChart>
-          </ResponsiveContainer>
+      <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-4 h-[300px] lg:h-full overflow-y-auto">
+        <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-3">
+          Action Items
+        </h2>
+        <div className="space-y-3">
+          {exceptions.map((item, i) => {
+            const style = priorityStyles[item.priority];
+            return (
+              <div
+                key={i}
+                className={`border-l-3 ${style.border} pl-3 py-2 animate-fade-in`}
+                style={{ borderLeftWidth: '3px', animationDelay: `${i * 100}ms` }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`${style.bg} text-white text-[10px] font-barlow font-bold px-2 py-0.5 rounded`}>
+                    {style.text}
+                  </span>
+                </div>
+                <p className="font-barlow text-sm text-mgh-charcoal font-bold">{item.title}</p>
+                <p className="font-barlow text-xs text-mgh-grey mt-0.5">{item.details}</p>
+                <div className="flex gap-2 mt-2">
+                  {item.actions.map((action, j) => (
+                    <button
+                      key={j}
+                      onClick={() => showToast(`${action} — action initiated`)}
+                      className="text-[11px] font-barlow font-bold text-mgh-blue border border-mgh-blue/30 px-2 py-1 rounded hover:bg-mgh-blue hover:text-white transition-colors"
+                    >
+                      {action}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
+
+      {/* Row 3: Charts */ }
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    {/* Freight Spend */}
+    <div className="bg-white rounded-lg shadow-sm p-4">
+      <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
+        Freight Spend (Last 6 Months)
+      </h2>
+      <ResponsiveContainer width="100%" height={250}>
+        <BarChart data={spendData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#F4F4F4" />
+          <XAxis dataKey="month" tick={{ fontSize: 12, fontFamily: 'Barlow Condensed', fill: '#2A2A38' }} />
+          <YAxis tickFormatter={formatCurrency} tick={{ fontSize: 11, fontFamily: 'Space Mono', fill: '#B2B8BF' }} />
+          <Tooltip
+            formatter={(val) => formatCurrency(val)}
+            contentStyle={{ fontFamily: 'Barlow Condensed', fontSize: 13, borderRadius: 8, borderColor: '#B2B8BF' }}
+          />
+          <Legend wrapperStyle={{ fontFamily: 'Barlow Condensed', fontSize: 12 }} />
+          <Bar dataKey="ocean" name="Ocean" stackId="a" fill="#34328F" radius={[0, 0, 0, 0]} />
+          <Bar dataKey="air" name="Air" stackId="a" fill="#00D4FF" />
+          <Bar dataKey="truck" name="Truck" stackId="a" fill="#F59E0B" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* Carrier Performance */}
+    <div className="bg-white rounded-lg shadow-sm p-4">
+      <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
+        On-Time Performance by Carrier
+      </h2>
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={carrierPerformance}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#F4F4F4" />
+          <XAxis dataKey="week" tick={{ fontSize: 12, fontFamily: 'Barlow Condensed', fill: '#2A2A38' }} />
+          <YAxis domain={[80, 100]} tick={{ fontSize: 11, fontFamily: 'Space Mono', fill: '#B2B8BF' }} tickFormatter={(v) => `${v}%`} />
+          <Tooltip
+            formatter={(val) => `${val}%`}
+            contentStyle={{ fontFamily: 'Barlow Condensed', fontSize: 13, borderRadius: 8, borderColor: '#B2B8BF' }}
+          />
+          <Legend wrapperStyle={{ fontFamily: 'Barlow Condensed', fontSize: 12 }} />
+          <Line type="monotone" dataKey="maersk" name="Maersk" stroke="#34328F" strokeWidth={2} dot={{ r: 3 }} />
+          <Line type="monotone" dataKey="msc" name="MSC" stroke="#082567" strokeWidth={2} dot={{ r: 3 }} />
+          <Line type="monotone" dataKey="cosco" name="COSCO" stroke="#00D4FF" strokeWidth={2} dot={{ r: 3 }} />
+          <Line type="monotone" dataKey="hapagLloyd" name="Hapag-Lloyd" stroke="#B2B8BF" strokeWidth={2} dot={{ r: 3 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+    </div >
   );
 };
 
