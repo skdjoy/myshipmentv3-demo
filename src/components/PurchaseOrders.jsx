@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Package, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Package, ChevronDown, ChevronUp, Check, Upload } from 'lucide-react';
 import { purchaseOrders } from '../data/dummyData';
 
 const milestoneLabels = [
@@ -19,26 +19,64 @@ const statusColors = {
   'Cutting Started': 'bg-orange-100 text-orange-700',
   'In Transit': 'bg-cyan-100 text-cyan-700',
   'Delivered': 'bg-green-100 text-green-700',
+  'PO Received': 'bg-gray-100 text-gray-700',
 };
 
 const PurchaseOrders = ({ showToast }) => {
+  const [localPOs, setLocalPOs] = useState(purchaseOrders);
   const [statusFilter, setStatusFilter] = useState('All');
   const [supplierFilter, setSupplierFilter] = useState('All');
   const [seasonFilter, setSeasonFilter] = useState('All');
   const [expandedRow, setExpandedRow] = useState(null);
 
-  const statuses = ['All', 'In Production', 'QC Passed', 'Fabric Sourced', 'Cutting Started', 'In Transit', 'Delivered'];
-  const suppliers = ['All', ...new Set(purchaseOrders.map(p => p.supplier))];
-  const seasons = ['All', ...new Set(purchaseOrders.map(p => p.season))];
+  const statuses = ['All', 'In Production', 'QC Passed', 'Fabric Sourced', 'Cutting Started', 'In Transit', 'Delivered', 'PO Received'];
+  const suppliers = ['All', ...new Set(localPOs.map(p => p.supplier))];
+  const seasons = ['All', ...new Set(localPOs.map(p => p.season))];
 
   const filtered = useMemo(() => {
-    return purchaseOrders.filter(po => {
+    return localPOs.filter(po => {
       if (statusFilter !== 'All' && po.status !== statusFilter) return false;
       if (supplierFilter !== 'All' && po.supplier !== supplierFilter) return false;
       if (seasonFilter !== 'All' && po.season !== seasonFilter) return false;
       return true;
     });
-  }, [statusFilter, supplierFilter, seasonFilter]);
+  }, [statusFilter, supplierFilter, seasonFilter, localPOs]);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    showToast('Processing Excel file...');
+
+    // Simulate Excel parsing delay
+    setTimeout(() => {
+      const newPO = {
+        poNumber: `PO-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+        supplier: "New Excel Supplier Ltd.",
+        origin: "Dhaka, BD",
+        items: "Imported via Excel (Cotton Pants)",
+        totalUnits: 12500,
+        exFactory: "2026-05-20",
+        status: "PO Received",
+        progress: 0,
+        milestones: {
+          poReceived: new Date().toISOString().split('T')[0],
+          fabricSourced: null,
+          cuttingStarted: null,
+          sewingStarted: null,
+          qcPassed: null,
+          packed: null,
+          shipped: null
+        },
+        season: "AW26",
+        value: 145000,
+        lineItems: []
+      };
+
+      setLocalPOs(prev => [newPO, ...prev]);
+      showToast('Success! 1 new PO imported from Excel.');
+    }, 1500);
+  };
 
   const FilterPill = ({ label, options, value, onChange }) => (
     <div className="flex items-center gap-1.5">
@@ -62,11 +100,31 @@ const PurchaseOrders = ({ showToast }) => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div>
-        <h1 className="font-oswald font-semibold text-2xl uppercase text-mgh-blue tracking-wide">
-          Purchase Orders
-        </h1>
-        <p className="font-barlow text-sm text-mgh-grey">Track production progress from factory floor to shipment</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="font-oswald font-semibold text-2xl uppercase text-mgh-blue tracking-wide">
+            Purchase Orders
+          </h1>
+          <p className="font-barlow text-sm text-mgh-grey">Track production progress from factory floor to shipment</p>
+        </div>
+
+        {/* Upload Button */}
+        <div>
+          <input
+            type="file"
+            id="po-upload"
+            accept=".xlsx, .xls, .csv"
+            className="hidden"
+            onChange={handleFileUpload}
+          />
+          <label
+            htmlFor="po-upload"
+            className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-green-700 transition-colors shadow-sm"
+          >
+            <Upload size={16} />
+            <span className="font-barlow font-bold text-sm uppercase tracking-wide">Upload PO (Excel)</span>
+          </label>
+        </div>
       </div>
 
       {/* Filters */}
@@ -152,10 +210,10 @@ const PurchaseOrders = ({ showToast }) => {
                               {/* Milestone Circle */}
                               <div
                                 className={`relative z-10 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 shadow-sm ${isComplete
-                                    ? isCurrent
-                                      ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20 scale-110'
-                                      : 'bg-mgh-blue text-white'
-                                    : 'bg-white border-2 border-mgh-grey/30 text-mgh-grey'
+                                  ? isCurrent
+                                    ? 'bg-mgh-cyan text-white animate-glow ring-4 ring-mgh-cyan/20 scale-110'
+                                    : 'bg-mgh-blue text-white'
+                                  : 'bg-white border-2 border-mgh-grey/30 text-mgh-grey'
                                   }`}
                               >
                                 {isComplete ? <Check size={14} strokeWidth={3} /> : i + 1}
