@@ -6,7 +6,7 @@ import {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'askMGH', label: 'MGH ASK™', icon: Bot },
+  { id: 'askMGH', label: 'MGH ASK', icon: Bot },
   { id: 'purchaseOrders', label: 'Purchase Orders', icon: Package },
   { id: 'shipments', label: 'Shipment Tracker', icon: Ship },
   { id: 'booking', label: 'Booking Engine', icon: ClipboardList },

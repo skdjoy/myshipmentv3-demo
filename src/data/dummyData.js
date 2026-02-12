@@ -6,7 +6,7 @@ export const purchaseOrders = [
     items: "Men's Cotton Crew Tee (4 colors)",
     totalUnits: 25000,
     exFactory: "2026-02-20",
-    status: "In Production",
+    status: "Sewing",
     progress: 65,
     milestones: {
       poReceived: "2026-01-05",
@@ -81,7 +81,7 @@ export const purchaseOrders = [
     items: "Women's Silk Scarf Collection",
     totalUnits: 15000,
     exFactory: "2026-02-22",
-    status: "Cutting Started",
+    status: "Cutting",
     progress: 45,
     milestones: {
       poReceived: "2026-01-02",
@@ -106,7 +106,7 @@ export const purchaseOrders = [
     items: "Smart Watch Band (3 variants)",
     totalUnits: 50000,
     exFactory: "2026-01-10",
-    status: "Delivered",
+    status: "Shipped",
     progress: 100,
     milestones: {
       poReceived: "2025-10-01",
@@ -213,7 +213,7 @@ export const shipments = [
     departure: "2026-01-28",
     carrierETA: "2026-02-25",
     mghPredictedETA: "2026-03-02",
-    status: "In Transit",
+    status: "Shipped",
     exception: "DELAYED — Suez Canal congestion",
     containers: 3,
     teus: 6,
@@ -233,7 +233,7 @@ export const shipments = [
     departure: "2026-02-01",
     carrierETA: "2026-02-18",
     mghPredictedETA: "2026-02-18",
-    status: "In Transit",
+    status: "Shipped",
     exception: null,
     containers: 2,
     teus: 4,
@@ -293,7 +293,7 @@ export const shipments = [
     departure: "2026-01-22",
     carrierETA: "2026-02-20",
     mghPredictedETA: "2026-02-24",
-    status: "In Transit",
+    status: "Shipped",
     exception: "DELAYED — Port congestion at Felixstowe",
     containers: 4,
     teus: 8,
@@ -426,142 +426,107 @@ export const chatResponses = [
     }
   },
   {
-    keywords: ["TAT", "turnaround", "transit time", "average time", "Shanghai to Rotterdam"],
+    keywords: ["volume analysis", "Bangladesh", "last 6 months"],
     response: {
       type: "text_with_chart",
-      text: "Here's the transit time analysis for Shanghai → Rotterdam (Q1 2026):",
-      summary: "The average door-to-door TAT this quarter is **31.4 days**, which is 2.1 days longer than Q4 2025 (29.3 days). The increase is primarily due to Suez Canal congestion in January-February.",
+      text: "Here is the volume analysis for Bangladesh (Chittagong & Dhaka) over the last 6 months:",
+      summary: "Total volume from Bangladesh has increased by **18%** since September. Air freight usage spiked in December due to year-end rush.",
       chart: {
-        type: "bar",
+        type: "grouped_bar",
         data: [
-          { month: "Oct 25", tat: 28.5 },
-          { month: "Nov 25", tat: 29.1 },
-          { month: "Dec 25", tat: 30.2 },
-          { month: "Jan 26", tat: 32.8 },
-          { month: "Feb 26", tat: 30.1 }
+          { month: "Sep", ocean: 450, air: 120 },
+          { month: "Oct", ocean: 480, air: 130 },
+          { month: "Nov", ocean: 520, air: 180 },
+          { month: "Dec", ocean: 550, air: 320 },
+          { month: "Jan", ocean: 510, air: 150 },
+          { month: "Feb", ocean: 530, air: 110 }
+        ],
+        bars: [
+          { key: "ocean", label: "Ocean (TEUs)", color: "#34328F" },
+          { key: "air", label: "Air (Tons)", color: "#EF4444" }
         ],
         xKey: "month",
-        yKey: "tat",
-        yLabel: "Days",
-        color: "#34328F"
-      },
-      breakdown: "Breakdown: Origin handling 3.2 days | Ocean transit 24.8 days | Destination clearance 3.4 days"
-    }
-  },
-  {
-    keywords: ["delay", "anticipated delay", "late", "behind schedule", "PO-2026-44918"],
-    response: {
-      type: "text_with_card",
-      text: "I've analyzed PO-2026-44918 (Jiangsu Garments Co. — Men's Cotton Crew Tee). Here's my assessment:",
-      card: {
-        title: "PO-2026-44918 — Delay Risk Analysis",
-        fields: [
-          { label: "Current Status", value: "In Production (65% complete)" },
-          { label: "Ex-Factory Date", value: "Feb 20, 2026" },
-          { label: "Projected Completion", value: "Feb 24, 2026", highlight: true },
-          { label: "Delay Risk", value: "MEDIUM — 4 days", badge: "warning" },
-          { label: "Root Cause", value: "QC bottleneck at sewing stage; factory running at 112% capacity" },
-          { label: "Impact", value: "May miss vessel MSC Clara (ETD Feb 26). Next available: Mar 2 (+4 days)" }
-        ],
-        alert: "Recommended Action: Request supplier to prioritize this PO for overtime production. Estimated overtime cost: $2,400. This would recover 3 of the 4 delay days."
+        yLabel: "Volume"
       }
     }
   },
   {
-    keywords: ["at risk", "exception", "risk", "Chittagong", "which shipments"],
+    keywords: ["suppliers delivering late", "late suppliers", "delivery performance"],
     response: {
       type: "text_with_table",
-      text: "I found 3 shipments originating from Chittagong (CGP) with active risk flags:",
+      text: "I've identified 3 suppliers with a Late Delivery Rate > 15% in Q1 2026:",
       table: {
-        headers: ["Shipment", "Vessel", "ETA", "Risk", "Issue"],
+        headers: ["Supplier", "Region", "Late POs", "Avg Delay", "Impact"],
         rows: [
-          ["SHP-2026-00903", "COSCO Shipping Leo", "Mar 16 (+2d)", "HIGH", "Port congestion + pending ISF"],
-          ["SHP-2026-00945", "Wan Hai 512", "Mar 22", "MEDIUM", "Vessel schedule change, 1 transshipment added"],
-          ["SHP-2026-00961", "Maersk Seletar", "Mar 28", "MEDIUM", "Factory CRD slipped 3 days, may miss cutoff"]
+          ["Jiangsu Garments Co.", "China", "4 POs", "5 Days", "HIGH"],
+          ["Pham Textiles Ltd.", "Vietnam", "2 POs", "3 Days", "MEDIUM"],
+          ["Dhaka Knitwear", "Bangladesh", "1 PO", "7 Days", "LOW"]
         ]
       },
-      followUp: "Would you like me to show recommended actions for each?"
+      followUp: "Draft an email to Jiangsu Garments regarding performance?"
     }
   },
   {
-    keywords: ["container utilization", "optimization", "compare", "utilization"],
+    keywords: ["savings", "airfreight", "last minute", "cut off"],
+    response: {
+      type: "text_with_card",
+      text: "Analysis of potential savings by optimizing airfreight cutoff times:",
+      card: {
+        title: "Airfreight Cost Optimization",
+        fields: [
+          { label: "Total Air Spend (Q1)", value: "$680,000" },
+          { label: "Rush/Last-Minute Bookings", value: "42%" },
+          { label: "Potential Savings", value: "$85,000 (12.5%)", highlight: true },
+          { label: "Strategy", value: "Enforce T-5 days booking cutoff" }
+        ],
+        alert: " shifting 20% of 'Rush' air cargo to 'Standard' service levels would save approx. $45,000 immediately."
+      }
+    }
+  },
+  {
+    keywords: ["container optimisation", "optimization", "utilization"],
     response: {
       type: "text_with_chart",
-      text: "Here's the container utilization comparison across your top 3 trade lanes for Q1 2026:",
+      text: "Container utilization Comparison (Current vs Target):",
       chart: {
         type: "grouped_bar",
         data: [
-          { lane: "SHA→RTD", currentUtil: 89, targetUtil: 92, lastQuarter: 85 },
-          { lane: "HCM→LAX", currentUtil: 94, targetUtil: 92, lastQuarter: 91 },
-          { lane: "DAC→HAM", currentUtil: 78, targetUtil: 92, lastQuarter: 82 }
+          { lane: "Shanghai", current: 85, target: 95 },
+          { lane: "Ho Chi Minh", current: 92, target: 95 },
+          { lane: "Chittagong", current: 78, target: 90 },
+          { lane: "Mumbai", current: 88, target: 90 }
         ],
         bars: [
-          { key: "currentUtil", label: "Current Q1", color: "#34328F" },
-          { key: "targetUtil", label: "Target", color: "#00D4FF" },
-          { key: "lastQuarter", label: "Last Quarter", color: "#B2B8BF" }
+          { key: "current", label: "Current %", color: "#34328F" },
+          { key: "target", label: "Target %", color: "#22C55E" }
         ],
         xKey: "lane",
         yLabel: "Utilization %"
       },
-      summary: "**Key Insights:**\n\nHCM→LAX is exceeding target at 94% (+2% above target) — excellent consolidation by origin team\n\nSHA→RTD improved from 85% to 89% but still 3% below target\n\nDAC→HAM dropped from 82% to 78% — investigate. Potential savings: ~$34,000/month if brought to target",
-      followUp: "Would you like me to drill into the Dhaka-Hamburg lane to identify specific consolidation opportunities?"
-    }
-  },
-  {
-    keywords: ["on-time", "delivery performance", "this month vs", "OTD", "performance comparison"],
-    response: {
-      type: "text_with_chart",
-      text: "Here's your on-time delivery performance breakdown:",
-      chart: {
-        type: "grouped_bar",
-        data: [
-          { carrier: "Maersk", thisMonth: 96, lastMonth: 93 },
-          { carrier: "MSC", thisMonth: 91, lastMonth: 88 },
-          { carrier: "COSCO", thisMonth: 85, lastMonth: 90 },
-          { carrier: "Hapag-Lloyd", thisMonth: 94, lastMonth: 92 },
-          { carrier: "Evergreen", thisMonth: 79, lastMonth: 86 }
-        ],
-        bars: [
-          { key: "thisMonth", label: "Feb 2026", color: "#34328F" },
-          { key: "lastMonth", label: "Jan 2026", color: "#B2B8BF" }
-        ],
-        xKey: "carrier",
-        yLabel: "OTD %"
-      },
-      summary: "**Overall OTD: 94.2%** (up 2.1% from January's 92.1%)\n\n**Best Performer:** Maersk at 96% (+3% improvement)\n\n**Biggest Concern:** Evergreen dropped to 79% (-7%) — related to Felixstowe port congestion affecting 4 shipments\n\n**COSCO** also declined 5% — Suez Canal delays are the primary cause\n\nRecommendation: Consider routing 2 upcoming Evergreen bookings to Maersk for the Felixstowe lane until congestion clears."
+      summary: "Chittagong lanes are under-utilized (78%). Consolidating LCL shipments could save ~**$12,000/month**."
     }
   }
 ];
 
 export const suggestedQuestions = [
   {
-    icon: "Ship",
-    label: "Shipment Status",
-    query: "What is the current status of shipment SHP-2026-00891?"
-  },
-  {
-    icon: "Clock",
-    label: "Turnaround Time",
-    query: "What is the average TAT for the Shanghai to Rotterdam lane this quarter?"
-  },
-  {
-    icon: "AlertTriangle",
-    label: "Delay Alerts",
-    query: "Are there any anticipated delays on PO-2026-44918?"
+    icon: "BarChart3",
+    label: "Volume Analysis",
+    query: "Volume analysis of Bangladesh over last 6 months"
   },
   {
     icon: "AlertCircle",
-    label: "At-Risk Shipments",
-    query: "Which shipments from POL Chittagong are currently at risk?"
-  },
-  {
-    icon: "BarChart3",
-    label: "Container Optimization",
-    query: "Compare container utilization rates across our top 3 trade lanes"
+    label: "Supplier Risk",
+    query: "List of suppliers delivering late"
   },
   {
     icon: "TrendingUp",
-    label: "KPI Summary",
-    query: "Show me on-time delivery performance comparison: this month vs last month"
+    label: "Cost Savings",
+    query: "Savings in Airfreight by last minute cut off"
+  },
+  {
+    icon: "Ship",
+    label: "Optimization",
+    query: "Container optimisation"
   }
 ];

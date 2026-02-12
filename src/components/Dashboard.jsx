@@ -10,7 +10,7 @@ const formatCurrency = (val) => {
   return `$${val}`;
 };
 
-const KPICard = ({ icon: Icon, label, value, trend, trendValue, subtext, delay = 0 }) => {
+const KPICard = ({ icon: Icon, label, value, trend, trendValue, subtext, delay = 0, period }) => {
   const [displayed, setDisplayed] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setDisplayed(true), delay);
@@ -18,8 +18,15 @@ const KPICard = ({ icon: Icon, label, value, trend, trendValue, subtext, delay =
   }, [delay]);
 
   return (
-    <div className="bg-white rounded-lg p-4 border-l-4 border-mgh-cyan shadow-sm animate-fade-in" style={{ animationDelay: `${delay}ms` }}>
-      <div className="flex items-start justify-between">
+    <div className="bg-white rounded-lg p-4 border-l-4 border-mgh-cyan shadow-sm animate-fade-in relative overflow-hidden" style={{ animationDelay: `${delay}ms` }}>
+      {/* Background period indicator */}
+      {period && (
+        <div className="absolute top-2 right-2 text-[10px] font-barlow font-bold text-mgh-charcoal/60 uppercase tracking-widest pointer-events-none select-none">
+          {period}
+        </div>
+      )}
+
+      <div className="flex items-start justify-between mt-4">
         <div className="flex items-center gap-2 mb-2">
           <Icon size={20} strokeWidth={2} className="text-mgh-blue" />
           <span className="font-barlow font-bold text-xs uppercase tracking-wider text-mgh-charcoal">
@@ -69,6 +76,7 @@ const Dashboard = ({ showToast }) => {
           trendValue="12% vs last month"
           subtext="842 Ocean · 289 Air · 116 Truck"
           delay={0}
+          period="Current Month"
         />
         <KPICard
           icon={Clock}
@@ -78,15 +86,17 @@ const Dashboard = ({ showToast }) => {
           trendValue="2.1% vs last month"
           subtext="Target: 95%"
           delay={100}
+          period="Current Month"
         />
         <KPICard
           icon={Package}
           label="POs in Transit"
           value="3,891"
-          trend={null}
-          trendValue="—"
+          trend="up"
+          trendValue="4.5% vs last month"
           subtext="Worth $48.2M retail value"
           delay={200}
+          period="Current Month"
         />
         <KPICard
           icon={AlertTriangle}
@@ -96,6 +106,7 @@ const Dashboard = ({ showToast }) => {
           trendValue="8 vs last week"
           subtext="5 Critical · 11 Warning · 7 Info"
           delay={300}
+          period="Last 7 Days"
         />
       </div>
 

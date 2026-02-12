@@ -13,12 +13,12 @@ const milestoneLabels = [
 ];
 
 const statusColors = {
-  'In Production': 'bg-blue-100 text-blue-700',
+  'Sewing': 'bg-blue-100 text-blue-700',
   'QC Passed': 'bg-green-100 text-green-700',
   'Fabric Sourced': 'bg-yellow-100 text-yellow-700',
-  'Cutting Started': 'bg-orange-100 text-orange-700',
-  'In Transit': 'bg-cyan-100 text-cyan-700',
-  'Delivered': 'bg-green-100 text-green-700',
+  'Cutting': 'bg-orange-100 text-orange-700',
+  'Shipped': 'bg-cyan-100 text-cyan-700',
+  'Packed': 'bg-purple-100 text-purple-700',
   'PO Received': 'bg-gray-100 text-gray-700',
 };
 
@@ -29,7 +29,7 @@ const PurchaseOrders = ({ showToast }) => {
   const [seasonFilter, setSeasonFilter] = useState('All');
   const [expandedRow, setExpandedRow] = useState(null);
 
-  const statuses = ['All', 'In Production', 'QC Passed', 'Fabric Sourced', 'Cutting Started', 'In Transit', 'Delivered', 'PO Received'];
+  const statuses = ['All', 'PO Received', 'Fabric Sourced', 'Cutting', 'Sewing', 'QC Passed', 'Packed', 'Shipped'];
   const suppliers = ['All', ...new Set(localPOs.map(p => p.supplier))];
   const seasons = ['All', ...new Set(localPOs.map(p => p.season))];
 

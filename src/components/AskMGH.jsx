@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Ship, Clock, AlertTriangle, AlertCircle, BarChart3, TrendingUp, Send,
-  Plus, MessageSquare, ArrowLeft, Trash2
+  Plus, MessageSquare, ArrowLeft, Trash2, Search, MessageCircle
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { chatResponses, suggestedQuestions } from '../data/dummyData';
@@ -232,6 +232,8 @@ const AskMGH = () => {
   };
 
   const showWelcome = !activeChatId;
+  const showLandingPage = !activeChatId || (activeChat && activeChat.messages.length === 0);
+
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] animate-fade-in relative">
@@ -245,7 +247,7 @@ const AskMGH = () => {
 
       {/* Chat History Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-mgh-grey/15 flex flex-col transition-transform duration-300 transform md:relative md:translate-x-0 md:w-56 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}>
+        } ${showWelcome ? 'hidden md:hidden' : ''}`}>
         <div className="p-3 border-b border-mgh-grey/15 flex justify-between items-center">
           <button
             onClick={startNewChat}
@@ -314,7 +316,7 @@ const AskMGH = () => {
               <MessageSquare size={20} />
             </button>
 
-            {activeChatId && (
+            {activeChatId && !showWelcome && (
               <button
                 onClick={goBackToWelcome}
                 className="flex items-center gap-1.5 text-mgh-blue hover:text-mgh-navy font-barlow font-bold text-xs uppercase tracking-wider transition-colors"
@@ -336,112 +338,108 @@ const AskMGH = () => {
         <div className="flex-1 overflow-y-auto px-4 py-6">
           <div className="max-w-3xl mx-auto">
             {/* Welcome / Empty State */}
-            {showWelcome && (
-              <div className="flex flex-col items-center justify-center pt-12">
-                <h1 className="font-oswald font-semibold text-[28px] uppercase text-mgh-blue tracking-wide">
-                  MGH ASK™
-                </h1>
-                <p className="font-barlow text-base text-mgh-grey mt-1">
-                  Your AI-Powered Supply Chain Assistant
-                </p>
-                <p className="font-barlow text-sm text-mgh-grey mt-3 text-center max-w-md">
-                  Ask me anything about your shipments, purchase orders, delays, exceptions, and performance metrics.
+            {showLandingPage && (
+              <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
+                {/* Logo Section */}
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-[56px] font-bold tracking-tight leading-none" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <span className="text-[#34328F]">MGH </span>
+                    <span className="font-normal text-[#F59E0B]">A</span>
+                    <span className="font-normal text-[#34328F]">S</span>
+                    <span className="font-normal text-[#10B981]">K</span>
+                  </h1>
+                </div>
+                <p className="font-barlow text-base text-mgh-grey mb-8 font-light tracking-wide">
+                  Analytics-driven Shipment Knowledge
                 </p>
 
-                {/* Suggested Questions */}
-                <div className="grid grid-cols-2 gap-3 mt-8 w-full max-w-lg">
-                  {suggestedQuestions.map((sq, i) => {
-                    const Icon = iconMap[sq.icon];
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => handleSuggestion(sq.query)}
-                        className="bg-white border border-mgh-grey/30 rounded-lg px-4 py-3 text-left hover:border-mgh-blue hover:shadow-sm transition-all group"
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          {Icon && <Icon size={14} strokeWidth={2} className="text-mgh-blue" />}
-                          <span className="font-barlow font-bold text-xs uppercase text-mgh-blue">{sq.label}</span>
-                        </div>
-                        <p className="font-barlow text-xs text-mgh-grey group-hover:text-mgh-charcoal transition-colors line-clamp-2">
-                          {sq.query}
-                        </p>
-                      </button>
-                    );
-                  })}
+                {/* Search Bar */}
+                <div className="w-full max-w-2xl relative mb-8">
+                  <form onSubmit={handleSubmit} className="relative flex items-center">
+                    <div className="absolute left-6 text-mgh-grey">
+                      <Search size={22} strokeWidth={1.5} />
+                    </div>
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={e => setInput(e.target.value)}
+                      placeholder="Ask anything about your shipment..."
+                      className="w-full pl-14 pr-16 py-4 rounded-full border border-mgh-grey/20 shadow-sm hover:shadow-md focus:shadow-md focus:border-mgh-grey/30 focus:outline-none transition-all text-mgh-charcoal font-barlow text-lg placeholder:text-mgh-grey/50 placeholder:font-light"
+                    />
+                    <button
+                      type="submit"
+                      className="absolute right-1.5 top-1.5 bottom-1.5 aspect-square bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+                    >
+                      <Search size={20} strokeWidth={2.5} />
+                    </button>
+                  </form>
+                </div>
+
+                {/* Suggested Questions List */}
+                <div className="flex flex-col gap-3 w-full max-w-2xl px-4">
+                  {suggestedQuestions.map((sq, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleSuggestion(sq.query)}
+                      className="flex items-center gap-3 group text-left p-1 rounded hover:bg-black/5 transition-colors -ml-2"
+                    >
+                      <div className="bg-blue-500/90 p-1.5 rounded text-white shadow-sm flex-shrink-0">
+                        <MessageCircle size={14} strokeWidth={2.5} fill="currentColor" className="text-white" />
+                      </div>
+                      <span className="font-barlow text-base text-[#34328F] group-hover:underline decoration-1 underline-offset-4">
+                        {sq.query}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
 
-            {/* Active Chat — Empty state */}
-            {activeChatId && messages.length === 0 && !isTyping && (
-              <div className="flex flex-col items-center justify-center pt-16">
-                <h2 className="font-oswald font-semibold text-xl uppercase text-mgh-blue tracking-wide">
-                  New Conversation
-                </h2>
-                <p className="font-barlow text-sm text-mgh-grey mt-1">
-                  Type a question below to get started
-                </p>
-                <div className="grid grid-cols-2 gap-3 mt-6 w-full max-w-lg">
-                  {suggestedQuestions.map((sq, i) => {
-                    const Icon = iconMap[sq.icon];
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => handleSuggestion(sq.query)}
-                        className="bg-white border border-mgh-grey/30 rounded-lg px-4 py-3 text-left hover:border-mgh-blue hover:shadow-sm transition-all group"
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          {Icon && <Icon size={14} strokeWidth={2} className="text-mgh-blue" />}
-                          <span className="font-barlow font-bold text-xs uppercase text-mgh-blue">{sq.label}</span>
-                        </div>
-                        <p className="font-barlow text-xs text-mgh-grey group-hover:text-mgh-charcoal transition-colors line-clamp-2">
-                          {sq.query}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            {/* Active Chat — Empty state (transition from welcome) */}
+            {/* Handled by showLandingPage above */}
 
             {/* Messages */}
             {messages.map((msg, i) => (
               <div key={i} className={`mb-4 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}>
                 {msg.role === 'ai' && (
-                  <div className="w-6 h-6 rounded-full bg-mgh-blue/10 flex items-center justify-center mr-2 flex-shrink-0 mt-1">
-                    <span className="text-[8px] font-bold text-mgh-blue">M</span>
+                  <div className="w-8 h-8 rounded-full bg-mgh-blue/10 flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                    <span className="text-[10px] font-bold text-mgh-blue">M</span>
                   </div>
                 )}
                 <div className="max-w-[85%]">
                   {msg.role === 'user' ? (
-                    <div className="bg-mgh-blue text-white px-4 py-2.5 rounded-lg rounded-br-none shadow-sm">
-                      <p className="font-barlow text-sm">{msg.content}</p>
+                    <div className="bg-mgh-blue text-white px-5 py-3 rounded-2xl rounded-tr-sm shadow-sm">
+                      <p className="font-barlow text-sm leading-relaxed">{msg.content}</p>
                     </div>
                   ) : (
                     <div className="space-y-1">
-                      <div className="bg-white px-4 py-3 rounded-lg rounded-bl-none shadow-sm border border-mgh-grey/10">
+                      <div className="bg-white px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm border border-mgh-grey/10">
                         {formatText(msg.response.text)}
                         {msg.response.summary && (
-                          <div className="mt-2">{formatText(msg.response.summary)}</div>
+                          <div className="mt-3 pl-3 border-l-2 border-mgh-blue/30 italic text-mgh-grey text-sm">
+                            {formatText(msg.response.summary)}
+                          </div>
                         )}
                         {msg.response.card && <ChatCard card={msg.response.card} />}
                         {msg.response.table && <ChatTable table={msg.response.table} />}
                         {msg.response.chart && <ChatChart chart={msg.response.chart} />}
                         {msg.response.breakdown && (
-                          <p className="mt-2 font-barlow text-xs text-mgh-grey italic">{msg.response.breakdown}</p>
+                          <p className="mt-3 font-barlow text-xs text-mgh-grey/80 italic border-t border-mgh-grey/10 pt-2">{msg.response.breakdown}</p>
                         )}
                       </div>
                       {msg.response.followUp && (
-                        <button
-                          onClick={() => handleFollowUp(msg.response.followUp)}
-                          className="text-mgh-cyan text-xs font-barlow hover:underline mt-1 ml-1"
-                        >
-                          {msg.response.followUp}
-                        </button>
+                        <div className="flex gap-2 mt-2 ml-1">
+                          <button
+                            onClick={() => handleFollowUp(msg.response.followUp)}
+                            className="text-xs bg-white border border-mgh-blue/20 text-mgh-blue px-3 py-1.5 rounded-full hover:bg-mgh-blue/5 transition-colors font-medium shadow-sm"
+                          >
+                            {msg.response.followUp}
+                          </button>
+                        </div>
                       )}
                     </div>
                   )}
-                  <p className="text-[10px] text-mgh-grey font-barlow mt-1 px-1">
+                  <p className={`text-[10px] text-mgh-grey/60 font-barlow mt-1.5 px-2 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
                     {formatTime(msg.time)}
                   </p>
                 </div>
@@ -453,25 +451,27 @@ const AskMGH = () => {
           </div>
         </div>
 
-        {/* Input Bar — only shown when in a chat or on welcome */}
-        <div className="border-t border-mgh-grey/20 bg-white px-4 py-3">
-          <form onSubmit={handleSubmit} className="max-w-3xl mx-auto flex gap-3">
-            <input
-              type="text"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              placeholder="Ask about shipments, POs, delays, KPIs..."
-              className="flex-1 border border-mgh-grey/40 rounded-lg px-4 py-2.5 text-sm font-barlow focus:outline-none focus:ring-2 focus:ring-mgh-blue/30 focus:border-mgh-blue placeholder:text-mgh-grey"
-            />
-            <button
-              type="submit"
-              disabled={!input.trim()}
-              className="bg-mgh-blue text-white p-2.5 rounded-lg hover:bg-mgh-navy transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <Send size={18} strokeWidth={2} />
-            </button>
-          </form>
-        </div>
+        {/* Input Bar — ONLY shown when in active chat, NOT on welcome screen */}
+        {!showLandingPage && (
+          <div className="border-t border-mgh-grey/10 bg-white/80 backdrop-blur-md px-4 py-4 fixed bottom-0 left-0 md:left-56 right-0 z-20">
+            <form onSubmit={handleSubmit} className="max-w-3xl mx-auto flex gap-3 relative">
+              <input
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                placeholder="Ask follow-up..."
+                className="flex-1 bg-mgh-light/50 border border-mgh-grey/20 rounded-full px-5 py-3 text-sm font-barlow focus:outline-none focus:ring-2 focus:ring-mgh-blue/10 focus:border-mgh-blue/50 placeholder:text-mgh-grey/60 transition-all shadow-sm"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim()}
+                className="absolute right-2 top-2 bottom-2 aspect-square bg-mgh-blue text-white rounded-full flex items-center justify-center hover:bg-mgh-navy transition-all disabled:opacity-0 disabled:scale-75 shadow-md active:scale-95"
+              >
+                <Send size={16} strokeWidth={2.5} />
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { shipments } from '../data/dummyData';
 
 const statusCounts = {
   'All': shipments.length,
-  'In Transit': shipments.filter(s => s.status === 'In Transit').length,
+  'Shipped': shipments.filter(s => s.status === 'Shipped').length,
   'At Origin': shipments.filter(s => s.status === 'At Origin').length,
   'Customs': shipments.filter(s => s.status === 'Customs').length,
   'Delivered': shipments.filter(s => s.status === 'Delivered').length,
@@ -27,7 +27,7 @@ const ShipmentTracker = ({ showToast }) => {
       { label: 'Cargo Received at Origin Warehouse', date: 'Jan 25', done: true },
       { label: 'Customs Cleared (Origin)', date: 'Jan 27', done: true },
       { label: `Vessel Departed ${shp.origin}`, date: shp.departure.slice(5), done: true },
-      { label: 'In Transit', date: shp.status === 'In Transit' ? 'Current' : null, done: shp.status === 'In Transit' || shp.status === 'Customs' || shp.status === 'Delivered', current: shp.status === 'In Transit' },
+      { label: 'Shipped', date: shp.status === 'Shipped' ? 'Current' : null, done: shp.status === 'Shipped' || shp.status === 'Customs' || shp.status === 'Delivered', current: shp.status === 'Shipped' },
       { label: `Arrive ${shp.destination}`, date: `Carrier: ${shp.carrierETA.slice(5)} | MGH AI: ${shp.mghPredictedETA.slice(5)}`, done: shp.status === 'Customs' || shp.status === 'Delivered', hasWarning: shp.carrierETA !== shp.mghPredictedETA },
       { label: 'Customs Clearance (Destination)', date: null, done: shp.status === 'Delivered' },
       { label: 'Final Delivery to DC', date: null, done: shp.status === 'Delivered' },
@@ -51,8 +51,8 @@ const ShipmentTracker = ({ showToast }) => {
             key={status}
             onClick={() => setStatusFilter(status)}
             className={`px-3 py-1.5 rounded-lg text-sm font-barlow font-bold transition-colors ${statusFilter === status
-                ? 'bg-mgh-blue text-white'
-                : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
+              ? 'bg-mgh-blue text-white'
+              : 'bg-white text-mgh-charcoal border border-mgh-grey/40 hover:border-mgh-blue'
               }`}
           >
             {status} ({count})
@@ -87,10 +87,10 @@ const ShipmentTracker = ({ showToast }) => {
                     {shp.carrierETA !== shp.mghPredictedETA && ' ⚠️'}
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${shp.status === 'In Transit' ? 'bg-blue-100 text-blue-700' :
-                        shp.status === 'At Origin' ? 'bg-yellow-100 text-yellow-700' :
-                          shp.status === 'Customs' ? 'bg-purple-100 text-purple-700' :
-                            'bg-green-100 text-green-700'
+                    <span className={`px-2 py-0.5 rounded text-xs font-barlow font-bold ${shp.status === 'Shipped' ? 'bg-blue-100 text-blue-700' :
+                      shp.status === 'At Origin' ? 'bg-yellow-100 text-yellow-700' :
+                        shp.status === 'Customs' ? 'bg-purple-100 text-purple-700' :
+                          'bg-green-100 text-green-700'
                       }`}>
                       {shp.status}
                     </span>
@@ -122,10 +122,10 @@ const ShipmentTracker = ({ showToast }) => {
                               <div key={i} className="flex gap-3">
                                 <div className="flex flex-col items-center">
                                   <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${step.done
-                                      ? step.current
-                                        ? 'bg-mgh-cyan animate-glow'
-                                        : 'bg-mgh-blue'
-                                      : 'bg-mgh-grey/30'
+                                    ? step.current
+                                      ? 'bg-mgh-cyan animate-glow'
+                                      : 'bg-mgh-blue'
+                                    : 'bg-mgh-grey/30'
                                     }`}>
                                     {step.done && !step.current && <Check size={10} strokeWidth={3} className="text-white" />}
                                     {step.current && <Clock size={10} strokeWidth={2} className="text-white" />}
