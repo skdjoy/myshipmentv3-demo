@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Leaf, Zap, DollarSign, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Leaf, Zap, DollarSign, ChevronDown, ChevronUp, Truck } from 'lucide-react';
 
 const routeOptions = [
   {
@@ -64,6 +64,7 @@ const BookingEngine = ({ showToast }) => {
   const [weight, setWeight] = useState('22,400 kg');
   const [readyDate, setReadyDate] = useState('2026-02-15');
   const [linkedPO, setLinkedPO] = useState('PO-2026-44919');
+  const [isEVPickup, setIsEVPickup] = useState(false);
 
   const origins = ['Shanghai', 'Ho Chi Minh City', 'Dhaka', 'Mumbai', 'Jakarta'];
   const destinations = ['Rotterdam', 'Hamburg', 'Los Angeles', 'New York', 'Felixstowe'];
@@ -115,6 +116,31 @@ const BookingEngine = ({ showToast }) => {
             </select>
           </div>
         </div>
+
+        {/* First Mile Preference */}
+        <div className="mt-4 p-3 bg-mgh-light/30 rounded-lg border border-mgh-grey/20 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-full ${isEVPickup ? 'bg-green-100 text-green-600' : 'bg-mgh-grey/20 text-mgh-grey'}`}>
+              <Truck size={20} />
+            </div>
+            <div>
+              <p className="font-barlow font-bold text-sm text-mgh-charcoal">Green First Mile</p>
+              <p className="font-barlow text-xs text-mgh-grey">Use Electric Vehicles for pickup (saves ~45kg CO2)</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={`text-xs font-bold font-barlow ${isEVPickup ? 'text-green-600' : 'text-mgh-grey'}`}>
+              {isEVPickup ? 'EV Selected (+ $150)' : 'Standard Diesel'}
+            </span>
+            <button
+              onClick={() => setIsEVPickup(!isEVPickup)}
+              className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 relative ${isEVPickup ? 'bg-green-500' : 'bg-mgh-grey/40'}`}
+            >
+              <div className={`bg-white w-4 h-4 rounded-full shadow-sm transition-transform duration-300 ${isEVPickup ? 'translate-x-6' : 'translate-x-0'}`} />
+            </button>
+          </div>
+        </div>
+
         <button
           onClick={() => setShowResults(true)}
           className="mt-4 bg-mgh-blue text-white px-6 py-2.5 rounded-lg font-barlow font-bold text-sm uppercase tracking-wider hover:bg-mgh-navy transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
@@ -151,7 +177,9 @@ const BookingEngine = ({ showToast }) => {
                   </div>
                 </div>
                 <div className="mt-4 pt-3 border-t border-mgh-light flex items-center justify-between">
-                  <span className="font-mono font-bold text-xl text-mgh-blue">{opt.price}</span>
+                  <span className="font-mono font-bold text-xl text-mgh-blue">
+                    ${(parseInt(opt.price.replace(/[^0-9]/g, '')) + (isEVPickup ? 150 : 0)).toLocaleString()}
+                  </span>
                   <span className="text-[10px] font-barlow text-mgh-grey">per {cargoType}</span>
                 </div>
                 <button

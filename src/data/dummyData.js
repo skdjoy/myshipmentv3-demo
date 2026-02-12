@@ -18,7 +18,12 @@ export const purchaseOrders = [
       shipped: null
     },
     season: "SS26",
-    value: 187500
+    value: 187500,
+    lineItems: [
+      { sku: "SK-MC-001", style: "M-TEE-CR", color: "White", size: "M", quantity: 10000, cartonQty: 200 },
+      { sku: "SK-MC-002", style: "M-TEE-CR", color: "Navy", size: "L", quantity: 8000, cartonQty: 160 },
+      { sku: "SK-MC-003", style: "M-TEE-CR", color: "Black", size: "S", quantity: 7000, cartonQty: 140 }
+    ]
   },
   {
     poNumber: "PO-2026-44919",
@@ -39,7 +44,11 @@ export const purchaseOrders = [
       shipped: null
     },
     season: "SS26",
-    value: 320000
+    value: 320000,
+    lineItems: [
+      { sku: "SK-WL-001", style: "W-BLZ-LN", color: "Beige", size: "38", quantity: 4000, cartonQty: 400 },
+      { sku: "SK-WL-002", style: "W-BLZ-LN", color: "Olive", size: "40", quantity: 4000, cartonQty: 400 }
+    ]
   },
   {
     poNumber: "PO-2026-44920",
@@ -56,11 +65,14 @@ export const purchaseOrders = [
       cuttingStarted: null,
       sewingStarted: null,
       qcPassed: null,
-      packed: null,
       shipped: null
     },
     season: "SS26",
-    value: 480000
+    value: 480000,
+    lineItems: [
+      { sku: "SK-KH-001", style: "K-HD-FL", color: "Red", size: "6Y", quantity: 20000, cartonQty: 1000 },
+      { sku: "SK-KH-002", style: "K-HD-FL", color: "Blue", size: "8Y", quantity: 20000, cartonQty: 1000 }
+    ]
   },
   {
     poNumber: "PO-2026-44921",
@@ -81,29 +93,12 @@ export const purchaseOrders = [
       shipped: null
     },
     season: "SS26",
-    value: 225000
+    value: 225000,
+    lineItems: [
+      { sku: "SK-WS-001", style: "W-SCF-SL", color: "Floral", size: "One Size", quantity: 15000, cartonQty: 150 }
+    ]
   },
-  {
-    poNumber: "PO-2025-43205",
-    supplier: "Jiangsu Garments Co.",
-    origin: "Shanghai, CN",
-    items: "Men's Down Jacket",
-    totalUnits: 12000,
-    exFactory: "2025-12-01",
-    status: "In Transit",
-    progress: 95,
-    milestones: {
-      poReceived: "2025-09-15",
-      fabricSourced: "2025-09-25",
-      cuttingStarted: "2025-10-05",
-      sewingStarted: "2025-10-20",
-      qcPassed: "2025-11-15",
-      packed: "2025-11-20",
-      shipped: "2025-12-03"
-    },
-    season: "AW25",
-    value: 540000
-  },
+
   {
     poNumber: "PO-2025-43210",
     supplier: "Shenzen Electronics",
@@ -124,6 +119,85 @@ export const purchaseOrders = [
     },
     season: "SS26",
     value: 750000
+  },
+  {
+    poNumber: "PO-2026-44950",
+    supplier: "Jiangsu Garments Co.",
+    origin: "Shanghai, CN",
+    items: "Women's Yoga Leggings",
+    totalUnits: 12000,
+    exFactory: "2026-03-10",
+    status: "Fabric Sourced",
+    progress: 30,
+    milestones: {
+      poReceived: "2026-02-01",
+      fabricSourced: "2026-02-10",
+      cuttingStarted: null,
+      sewingStarted: null,
+      qcPassed: null,
+      packed: null,
+      shipped: null
+    },
+    season: "SS26",
+    value: 120000,
+    lineItems: [
+      { sku: "SK-YL-001", style: "W-LEG-YG", color: "Black", size: "S", quantity: 4000, cartonQty: 200 },
+      { sku: "SK-YL-002", style: "W-LEG-YG", color: "Black", size: "M", quantity: 4000, cartonQty: 200 },
+      { sku: "SK-YL-003", style: "W-LEG-YG", color: "Black", size: "L", quantity: 4000, cartonQty: 200 }
+    ]
+  },
+  {
+    poNumber: "PO-2026-44951",
+    supplier: "Jiangsu Garments Co.",
+    origin: "Shanghai, CN",
+    items: "Men's Performance Shorts",
+    totalUnits: 15000,
+    exFactory: "2026-03-15",
+    status: "PO Received",
+    progress: 10,
+    milestones: {
+      poReceived: "2026-02-05",
+      fabricSourced: null,
+      cuttingStarted: null,
+      sewingStarted: null,
+      qcPassed: null,
+      packed: null,
+      shipped: null
+    },
+    season: "SS26",
+    value: 135000,
+    lineItems: [
+      { sku: "SK-MS-001", style: "M-SH-PF", color: "Grey", size: "M", quantity: 5000, cartonQty: 250 },
+      { sku: "SK-MS-002", style: "M-SH-PF", color: "Grey", size: "L", quantity: 5000, cartonQty: 250 },
+      { sku: "SK-MS-003", style: "M-SH-PF", color: "Navy", size: "M", quantity: 5000, cartonQty: 250 }
+    ]
+  },
+  {
+    poNumber: "PO-2026-44952",
+    supplier: "Jiangsu Garments Co.",
+    origin: "Shanghai, CN",
+    items: "Kids' Graphic Tees",
+    totalUnits: 20000,
+    exFactory: "2026-03-20",
+    status: "PO Received",
+    progress: 5,
+    milestones: {
+      poReceived: "2026-02-08",
+      fabricSourced: null,
+      cuttingStarted: null,
+      sewingStarted: null,
+      qcPassed: null,
+      packed: null,
+      shipped: null
+    },
+    season: "SS26",
+    value: 100000,
+    lineItems: [
+      { sku: "SK-KT-001", style: "K-TEE-GR", color: "White", size: "4Y", quantity: 5000, cartonQty: 250 },
+      { sku: "SK-KT-002", style: "K-TEE-GR", color: "Blue", size: "6Y", quantity: 5000, cartonQty: 250 },
+      { sku: "SK-KT-003", style: "K-TEE-GR", color: "Red", size: "8Y", quantity: 5000, cartonQty: 250 },
+      { sku: "SK-KT-004", style: "K-TEE-GR", color: "Green", size: "10Y", quantity: 5000, cartonQty: 250 }
+    ]
   }
 ];
 

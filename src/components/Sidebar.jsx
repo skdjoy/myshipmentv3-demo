@@ -10,6 +10,7 @@ const navItems = [
   { id: 'purchaseOrders', label: 'Purchase Orders', icon: Package },
   { id: 'shipments', label: 'Shipment Tracker', icon: Ship },
   { id: 'booking', label: 'Booking Engine', icon: ClipboardList },
+  { id: 'supplierBooking', label: 'Supplier Booking', icon: Package },
   { id: 'documents', label: 'Documents', icon: FileText },
   { id: 'finance', label: 'Finance', icon: DollarSign },
   { id: 'sustainability', label: 'Sustainability', icon: Leaf },
@@ -61,8 +62,8 @@ const Sidebar = ({ activeView, onNavigate, collapsed, onToggle, mobileOpen, onMo
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${isActive
-                    ? 'bg-mgh-navy border-l-3 border-mgh-cyan text-white'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white border-l-3 border-transparent'
+                  ? 'bg-mgh-navy border-l-3 border-mgh-cyan text-white'
+                  : 'text-white/70 hover:bg-white/5 hover:text-white border-l-3 border-transparent'
                   }`}
                 style={{ borderLeftWidth: '3px' }}
               >

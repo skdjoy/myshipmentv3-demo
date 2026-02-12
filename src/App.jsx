@@ -10,6 +10,7 @@ import Documents from './components/Documents';
 import Finance from './components/Finance';
 import Sustainability from './components/Sustainability';
 import AskMGH from './components/AskMGH';
+import SupplierBooking from './components/SupplierBooking';
 import { Settings } from 'lucide-react';
 
 const App = () => {
@@ -62,6 +63,8 @@ const App = () => {
         return <Sustainability showToast={showToast} />;
       case 'askMGH':
         return <AskMGH />;
+      case 'supplierBooking':
+        return <SupplierBooking showToast={showToast} />;
       case 'settings':
         return (
           <div className="flex flex-col items-center justify-center h-96 animate-fade-in">
