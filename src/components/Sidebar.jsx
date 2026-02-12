@@ -12,7 +12,6 @@ const navItems = [
   { id: 'supplierBooking', label: 'Supplier Booking', icon: Package },
   { id: 'shipments', label: 'Shipment Tracker', icon: Ship },
   { id: 'documents', label: 'Documents', icon: FileText },
-  { id: 'finance', label: 'Finance', icon: DollarSign },
   { id: 'sustainability', label: 'Sustainability', icon: Leaf },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];

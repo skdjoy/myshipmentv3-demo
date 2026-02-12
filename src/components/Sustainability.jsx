@@ -42,7 +42,7 @@ const Sustainability = ({ showToast }) => {
         {/* Emissions by Trade Lane */}
         <div className="bg-white rounded-lg shadow-sm p-5">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
-            Emissions by Trade Lane
+            Emissions by Trade Lane (Year to Date)
           </h2>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={emissionsData} layout="vertical" margin={{ left: 20 }}>
@@ -61,7 +61,7 @@ const Sustainability = ({ showToast }) => {
         {/* Emissions by Mode */}
         <div className="bg-white rounded-lg shadow-sm p-5">
           <h2 className="font-oswald font-semibold text-base uppercase text-mgh-blue tracking-wide mb-4">
-            Emissions by Transport Mode
+            Emissions by Transport Mode (Year to Date)
           </h2>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>

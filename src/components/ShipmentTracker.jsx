@@ -22,12 +22,28 @@ const ShipmentTracker = ({ showToast }) => {
   }, [statusFilter]);
 
   const timelineForShipment = (shp) => {
+    const isTarget = shp.id === 'SHP-2026-00891';
+
     const steps = [
       { label: 'Booking Confirmed', date: 'Jan 20', done: true },
       { label: 'Cargo Received at Origin Warehouse', date: 'Jan 25', done: true },
-      { label: 'Customs Cleared (Origin)', date: 'Jan 27', done: true },
-      { label: `Vessel Departed ${shp.origin}`, date: shp.departure.slice(5), done: true },
-      { label: 'Shipped', date: shp.status === 'Shipped' ? 'Current' : null, done: shp.status === 'Shipped' || shp.status === 'Customs' || shp.status === 'Delivered', current: shp.status === 'Shipped' },
+      {
+        label: 'Customs Cleared (Origin)',
+        date: 'Jan 27',
+        done: true,
+        current: isTarget
+      },
+      {
+        label: `Vessel Departed ${shp.origin}`,
+        date: isTarget ? null : shp.departure.slice(5),
+        done: !isTarget
+      },
+      {
+        label: 'Shipped',
+        date: isTarget ? null : (shp.status === 'Shipped' ? 'Current' : null),
+        done: isTarget ? false : (shp.status === 'Shipped' || shp.status === 'Customs' || shp.status === 'Delivered'),
+        current: isTarget ? false : (shp.status === 'Shipped')
+      },
       { label: `Arrive ${shp.destination}`, date: `Carrier: ${shp.carrierETA.slice(5)} | MGH AI: ${shp.mghPredictedETA.slice(5)}`, done: shp.status === 'Customs' || shp.status === 'Delivered', hasWarning: shp.carrierETA !== shp.mghPredictedETA },
       { label: 'Customs Clearance (Destination)', date: null, done: shp.status === 'Delivered' },
       { label: 'Final Delivery to DC', date: null, done: shp.status === 'Delivered' },
